@@ -9,27 +9,27 @@ var app = express();
 // Allowing our app to use the body parser package.
 app.use(bodyParser.urlencoded({extended:false}))
 
-app.use(express.static("public"));
+app.use(express.static("public")); //put CSS and images in the public folder
 
 var axios = require("axios").default;
   
 
 app.get("/", function(req, res) {
-      res.sendFile(__dirname + "/index.html");
+      res.sendFile(__dirname + "/index.html"); //start on main page index.html
 });
   
 // HANDLING THE POST REQUEST ON /DATA ROUTE.
 app.post("/",  function(req, res) {
-	const symbol = req.body.nameOfStock;
-	const price = req.body.purchasedPrice;
-	const qt = req.body.quantity;
+	const symbol = req.body.nameOfStock; //get name of stock from users input
+	const price = req.body.purchasedPrice; //get price of stock purchased from users input
+	const qt = req.body.quantity; //get quantity of stock purchased from users input
 
-	const upperSymbol = symbol.toUpperCase();
-	var options = 'https://finnhub.io/api/v1/quote?' + 'symbol=' + upperSymbol + "&token=YOUR_TOKEN";
+	const upperSymbol = symbol.toUpperCase(); //convert to all uppercase to send to finnhub API
+	var options = 'https://finnhub.io/api/v1/quote?' + 'symbol=' + upperSymbol + "&token=YOUR_TOKEN"; //concate URL, Symbol, TOKEN
 	
 
-        axios.request(options).then(function (response) {
-				const myvar = response.data;
+        axios.request(options).then(function (response) { //make axios call
+				const myvar = response.data; //store our call in a variable
 				
 				const totalPastPrice = parseInt(price) * parseInt(qt);
 				const totalCurrentPrice = parseInt(myvar.c) * parseInt(qt);
@@ -58,11 +58,11 @@ app.post("/",  function(req, res) {
 
 
 				
-			    res.send();
+			    res.send(); //send to browser
                 console.log(myvar);//test
           
           }).catch(function (error) {
-          console.error(error)
+          console.error(error) //catch if there was a axios ERROR to API
           });
 });
   
