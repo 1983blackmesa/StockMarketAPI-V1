@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var app = express();
   
 //example
-////https://finnhub.io/api/v1/quote?symbol=GOOGL&token=ca7vjaiad3id34o774q0
+////https://finnhub.io/api/v1/quote?symbol=GOOGL&token=YOUR_TOKEN
 
 // Allowing our app to use the body parser package.
 app.use(bodyParser.urlencoded({extended:false}))
@@ -25,7 +25,7 @@ app.post("/",  function(req, res) {
 	const qt = req.body.quantity;
 
 	const upperSymbol = symbol.toUpperCase();
-	var options = 'https://finnhub.io/api/v1/quote?' + 'symbol=' + upperSymbol + "&token=ca7vjaiad3id34o774q0";
+	var options = 'https://finnhub.io/api/v1/quote?' + 'symbol=' + upperSymbol + "&token=YOUR_TOKEN";
 	
 
         axios.request(options).then(function (response) {
