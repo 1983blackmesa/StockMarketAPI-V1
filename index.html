@@ -15,23 +15,68 @@
     <!-- Custom styles for this template -->
    <!--<link href="https://getbootstrap.com/docs/5.1/examples/sign-in/signin.css" rel="stylesheet"> -->
   <link href="css/styles.css" rel="stylesheet">
-  </head>
+
+ 
+
+</head>
 
   <body class="text-center">
-    <form action="/" class="form-signin" method="post">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h1 class="h3 mb-3 font-weight-normal">Stock Calculator</h1>
+          <div id="showValue"></div>
+        </div>
+        <div class="col-sm-12">
+          <form action="/" id="stockForm" class="form-signin" method="post">
       
-      <h1 class="h3 mb-3 font-weight-normal">Stock Calculator</h1>
-      <label for="inputEmail" class="sr-only"></label>
-      
-	  <input type="text" name="nameOfStock" class="form-control top" placeholder="Name of Stock" required autofocus>
-       <input type="text" name="purchasedPrice" class="form-control middle" placeholder="Purchased Price" >
-      <input type="text" name="quantity" class="form-control bottom" placeholder="Quantity Purchased" >
-      
-	  <div class="checkbox mb-3">
-        
+           
+            <label for="inputEmail" class="sr-only"></label>
+            
+          <input type="text" name="nameOfStock" id="StockName" class="form-control top" placeholder="Name of Stock" required autofocus>
+             <input type="text" name="purchasedPrice" id="PP" class="form-control middle" placeholder="Purchased Price" >
+            <input type="text" name="quantity" id="qty" class="form-control bottom" placeholder="Quantity Purchased" >
+            
+          <div class="checkbox mb-3">
+              
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Submit</button>
+            
+            <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+            
+          
+          </form>
+        </div>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Submit</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
-    </form>
+      
+    </div>
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+
+$("#stockForm").submit(function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: "/",
+        type: "POST",
+        data: {    
+          "nameOfStock": $("#StockName").val(),
+            "purchasedPrice": $("#PP").val(),
+            "quantity": $("#qty").val()
+        },
+        
+          success: function(data){
+            console.log(data);
+            //$("#stockForm").hide();
+            //var html = '<div><span>You have choosen: ' + data.nameOfStock + 'stock</span><span>The Current price of: ' + data.StockName + 'is' + data.purchasedPrice + '</span></div>';
+              $("#showValue").html(data);  
+            
+        }
+    });
+});
+
+    </script>
+
   </body>
 </html>
