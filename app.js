@@ -1,7 +1,9 @@
+require('dotenv').config();
 var express = require('express');
 var bodyParser = require('body-parser');
 
 var app = express();
+
   
 //example
 ////https://finnhub.io/api/v1/quote?symbol=GOOGL&token=YOUR_TOKEN
@@ -17,7 +19,9 @@ var axios = require("axios").default;
 app.get("/", function(req, res) {
       res.sendFile(__dirname + "/index.html"); //start on main page index.html
 });
-  
+
+const mytoken = process.env.TOKEN;
+//console.log(mytoken);
 // HANDLING THE POST REQUEST ON /DATA ROUTE.
 app.post("/",  function(req, res) {
 	const symbol = req.body.nameOfStock; //get name of stock from users input
@@ -25,8 +29,10 @@ app.post("/",  function(req, res) {
 	const qt = req.body.quantity; //get quantity of stock purchased from users input
 
 	const upperSymbol = symbol.toUpperCase(); //convert to all uppercase to send to finnhub API
-	var options = 'https://finnhub.io/api/v1/quote?' + 'symbol=' + upperSymbol + "&token=YOUR_TOKEN"; //concate URL, Symbol, TOKEN
 	
+	// var options = 'https://finnhub.io/api/v1/quote?' + 'symbol=' + upperSymbol + "&token='mytoken'"; //concate URL, Symbol, TOKEN
+	var options = 'https://finnhub.io/api/v1/quote?' + 'symbol=' + upperSymbol + "&token=" + mytoken; //concate URL, Symbol, TOKEN
+	console.log(options);
 
         axios.request(options).then(function (response) { //make axios call
 				const myvar = response.data; //store our call in a variable
@@ -67,7 +73,7 @@ app.post("/",  function(req, res) {
 });
   
   
-var port = 3000;
+var port = 5000;
 app.listen(port, function() {
-    console.log("Server started successfully at port 3000!");
+    console.log("Server started successfully at port 5000");
 });
